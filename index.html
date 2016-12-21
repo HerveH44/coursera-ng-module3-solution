@@ -18,8 +18,6 @@
     <div class="form-group narrow-button">
       <button ng-click="ctrl.getMatchedMenuItems();" class="btn btn-primary">{{ctrl.buttonTitle}}</button>
     </div>
-
-    <!-- found-items should be implemented as a component -->
     <found-items found-items="ctrl.found" no-item-found="ctrl.noItemFound" on-remove="ctrl.onRemove(index)"></found-items>
   </div>
 
