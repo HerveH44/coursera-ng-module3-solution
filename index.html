@@ -9,26 +9,19 @@
         <link rel="stylesheet" href="styles/styles.css">
     </head>
     <body>
-        <div class="container" ng-controller="NarrowItDownController as ctrl">
-            <h1>{{ctrl.title}}</h1>
-
-            <div class="form-group">
-                <input type="text"
-                       placeholder="search term"
-                       class="form-control"
-                       ng-model="ctrl.searchTerm">
+        <div class="container" ng-controller="NarrowItDownController as main">
+            <div class="row">
+                <h1>{{main.title}}</h1>
+                <div class="form-group">
+                    <input type="text" placeholder="search term" class="form-control" ng-model="main.searchTerm">
+                </div>
+                <div class="form-group narrow-button">
+                    <button ng-click="main.getMatchedMenuItems();" class="btn btn-primary">
+                        {{main.buttonTitle}}
+                    </button>
+                </div>
+                <found-items found-items="main.found" no-item-found="main.noItemFound" on-remove="main.onRemove(index)" is-searching="main.searching" is-finished="main.end"></found-items>
             </div>
-            <div class="form-group narrow-button">
-                <button ng-click="ctrl.getMatchedMenuItems();"
-                        class="btn btn-primary">
-                        {{ctrl.buttonTitle}}
-                </button>
-            </div>
-            <found-items found-items="ctrl.found"
-                         no-item-found="ctrl.noItemFound"
-                         on-remove="ctrl.onRemove(index)">
-            </found-items>
         </div>
-
     </body>
 </html>
