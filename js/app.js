@@ -139,7 +139,7 @@
         };
 
         service.getMenuItems = function() {
-            return service.result = service.result || $http({
+            return $http({
                 method: "GET",
                 url: (ApiBasePath + "/menu_items.json"),
             });
