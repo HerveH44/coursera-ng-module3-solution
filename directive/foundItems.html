@@ -5,7 +5,7 @@
         <div class="table-responsive" ng-if="list.finished && list.foundItems.length > 0">
             <legend class="alert alert-success">
                 <strong>{{list.foundItems.length}}</strong>{{list.resultTitle}}</legend>
-            <table class="table table-striped table-condensed" summary="Chinese Menu results" cellpadding="5" cellspacing="5">
+            <table class="table table-striped table-condensed table-hover" summary="Chinese Menu results" cellpadding="5" cellspacing="5">
                 <thead>
                     <tr>
                       <th ng-repeat="header in list.headers">
@@ -21,7 +21,7 @@
                     <tr ng-repeat="item in list.foundItems | orderBy: list.sortOrder: list.sortReverse">
                         <td ng-repeat="header in list.headers">{{item[header.id]}}</td>
                         <td>
-                            <button class="btn btn-danger" ng-click="list.onRemove({index: $index});">
+                            <button class="btn btn-danger" ng-click="list.onRemove({index: item.id});">
                                 {{list.buttonTitle}}
                             </button>
                         </td>

@@ -109,8 +109,13 @@
                 });
         }
 
-        main.onRemove = function(index) {
-            main.found.splice(index, 1);
+        main.onRemove = function(id) {
+            main.found.some(function(el, index) {
+              if(el.id == id) {
+                main.found.splice(index, 1);
+                return true;
+              }
+            });
         }
     }
     ///////////////
