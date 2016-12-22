@@ -121,8 +121,10 @@
         var service = this;
 
         service.getMatchedMenuItems = function(searchTerm) {
-            return service.getMenuItems()
-                .then(function(result) {
+            return $http({
+                method: "GET",
+                url: (ApiBasePath + "/menu_items.json"),
+            }).then(function(result) {
                     service.menuItems = result.data.menu_items;
 
                     function filterMenu(el) {
@@ -137,12 +139,5 @@
                     return error;
                 });
         };
-
-        service.getMenuItems = function() {
-            return $http({
-                method: "GET",
-                url: (ApiBasePath + "/menu_items.json"),
-            });
-        }
     }
 })();
