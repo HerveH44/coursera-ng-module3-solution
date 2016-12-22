@@ -43,6 +43,7 @@
         var list = this;
 
         list.buttonTitle = "Don't want this one!";
+        list.resultTitle = " items found!";
         list.noResultTitle = "Nothing found";
 
         list.sortOrder = 'id';
@@ -51,19 +52,19 @@
         list.headers = [{
             lib: "Id.",
             id: "id"
-        },{
+        }, {
             lib: "Short name",
             id: "short_name"
-        },{
+        }, {
             lib: "Name",
             id: "name"
-        },{
+        }, {
             lib: "Description",
             id: "description"
-        },{
+        }, {
             lib: "Price small",
             id: "price_small"
-        },{
+        }, {
             lib: "Price large",
             id: "price_large"
         }];
@@ -120,24 +121,37 @@
     function MenuSearchService($http, ApiBasePath) {
         var service = this;
 
+        service.filterScope = ["description"];
+
         service.getMatchedMenuItems = function(searchTerm) {
-            return $http({
+            var promise = service.getMenuItems();
+
+            return promise.then(function(result) {
+                var menuItems = result.data.menu_items;
+
+                function filterMenu(el) {
+                    return service.filterScope.some(function(filter) {
+                        return el[filter].indexOf(searchTerm) !== -1;
+                    })
+                }
+
+                var foundItems = menuItems.filter(filterMenu);
+
+                // return processed items
+                return foundItems;
+            }, function(error) {
+                return error;
+            });
+        };
+
+        service.getMenuItems = function() {
+            if (service.menuItemsCache)
+                return service.menuItemsCache;
+
+            return service.menuItemsCache = $http({
                 method: "GET",
                 url: (ApiBasePath + "/menu_items.json"),
-            }).then(function(result) {
-                    service.menuItems = result.data.menu_items;
-
-                    function filterMenu(el) {
-                        return el.description.indexOf(searchTerm) !== -1;
-                    }
-
-                    var foundItems = service.menuItems.filter(filterMenu);
-
-                    // return processed items
-                    return foundItems;
-                }, function(error) {
-                    return error;
-                });
-        };
+            });
+        }
     }
 })();
